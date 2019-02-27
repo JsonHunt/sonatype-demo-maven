@@ -5,6 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Lukasz
+ * This class converts numeric represantations of numbers into English words.
+ * It handles positive and negative integers with upper bound of 1 nonillion.
+ * Translation is done by splitting the number into 3-digit parts then joining them together.
+ *
+ */
 public class EnglishNumberConverter implements NumberConverter {
 
 	private Map<String, String> numbers = new HashMap<String, String>();
@@ -53,6 +60,11 @@ public class EnglishNumberConverter implements NumberConverter {
 		bigNumbers.put(9, "octillion");
 	}
 
+	/* (non-Javadoc)
+	 * @see com.sonatype.demo.NumberConverter#convertToWords(java.lang.String)
+	 * This method validates the number then converts it into words.
+	 * Handles minus sign, concatenation and trimming of redundant spaces.
+	 */
 	public String convertToWords(String str) {
 		String text = "";
 		Boolean isNegative = false;
@@ -108,6 +120,10 @@ public class EnglishNumberConverter implements NumberConverter {
 		return (str == null) || (Integer.parseInt(str) == 0);
 	}
 
+	/**
+	 * @param numberString numeric represantation of a number
+	 * @return list of 3-digit parts. First part returned may be shorter.
+	 */
 	private List<String> getParts(String numberString) {
 		List<String> partList = new ArrayList<String>();
 		int firstPartLen = numberString.length() % 3;
@@ -125,6 +141,11 @@ public class EnglishNumberConverter implements NumberConverter {
 		return partList;
 	}
 	
+	/**
+	 * @param part Three digit number to translate
+	 * @param useAnd instruction whether or not to consider using word 'and' in translation.
+	 * @return number translated to English words
+	 */
 	private String translatePart(String part, boolean useAnd) {
 		String text = "";
 		String hundreds = null;
